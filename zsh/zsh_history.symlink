@@ -1,0 +1,37 @@
+: 1600116219:0;pip3.8 
+: 1600116221:0;./setup
+: 1600116255:0;exit
+: 1600119550:0;tmux
+: 1600119553:0;exit
+: 1600121632:0;ls
+: 1600121634:0;la
+: 1600181047:0;cat ~/.ssh/id_rsa.pub | pbcopy
+: 1600181074:0;clear
+: 1600184362:0;cd src
+: 1600186508:0;cd ../.dotfiles/homebrew/
+: 1600186511:0;vim Brewfile.symlink
+: 1600186544:0;cd ../
+: 1600186552:0;./script/setup
+: 1600194003:0;clear
+: 1600194243:0;cat ~/.ssh/id_rsa.pub | pbcopy
+: 1600195229:0;vim homebrew /Brewfile.symlink
+: 1600195613:0;./script/setup
+: 1600195729:0;vim homebrew /Brewfile.symlink
+: 1600195744:0;clear
+: 1600358322:0;cd ..
+: 1600438072:0;cd src
+: 1600438074:0;l
+: 1600438080:0;cd VagrantDevelopment
+: 1600438082:0;git pull
+: 1600438116:0;ls
+: 1600438119:0;l
+: 1600438128:0;vim
+: 1600438343:0;cd ~/.dotfiles/script
+: 1600438346:0;./setup
+: 1600438525:0;tmux
+: 1600438550:0;vim ../homebrew/Brewfile.symlink
+: 1600438569:0;./setup
+: 1600439161:0;brew cask install virtualbox
+: 1600439245:0;xcode
+: 1600439338:0;xcode-select
+: 1600446382:0;exit
