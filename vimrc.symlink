@@ -1,0 +1,101 @@
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+
+" NerdTree
+Plugin 'scrooloose/nerdtree'
+Plugin 'Xuyuanp/nerdtree-git-plugin'
+
+" show git status in editor
+Plugin 'airblade/vim-gitgutter'
+
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+
+Plugin 'edkolev/tmuxline.vim'
+
+call vundle#end()            " required
+
+syntax on
+filetype plugin indent on
+
+set timeoutlen=350                  " delay before executing ambiguous keymap
+
+set vb                              " use visual bell
+set nowrap                          " disable line wrapping
+set hidden                          " hides buffers instead of closing them
+let mapleader=","                   " Change mapleader
+
+" keep files out of the home directory
+
+set directory=$HOME/.vim/.swap      " set swap directory
+set backupdir=$HOME/.vim/.backup    " set backup directory
+if exists("&undodir")
+	set undodir=~/.vim/undo
+endif
+
+set noswapfile                      " disable swap file creation
+set nobackup                        " disable backup creation
+set nowritebackup                   " disable atomic saves
+
+set tabstop=2                       " draw tabs with 2 spaces
+set softtabstop=2                   " set soft tab of 2 spaces
+set shiftwidth=2                    " use 2 spaces for auto-indents
+set expandtab                       " use spaces instead of tabs
+set autoindent                      " autoindent code
+set shiftround                      " indent to next tab stop multiple
+set backspace=indent,eol,start      " allow deleting auto-indentation
+
+set title			                      " Show the filename in the window titlebar
+
+:set number relativenumber          " turn hybrid line numbers on
+:set nonumber norelativenumber      " turn hybrid line numbers off
+:set number! relativenumber!        " toggle hybrid line numbers
+
+nnoremap ; :
+" no need to hit shift key for this
+
+" powerline fonts
+let g:airline_powerline_fonts = 1
+
+if !has('gui_running')
+  set t_Co=256
+endif
+
+" NerdTree
+map <C-t> :NERDTreeToggle<CR>
+" Enable nice colors
+let NERDChristmasTree = 1
+" Make it easy to see where we are
+let NERDTreeHighlightCursorline = 1
+" Make bookmarks visible
+let NERDTreeShowBookmarks = 1
+" Show hidden files
+let NERDTreeShowHidden = 1
+" Don't hijack NETRW
+let NERDTreeHijackNetrw = 1
+let NERDTreeIgnore=['\.$', '\~$']
+
+"tabs
+nnoremap th :tabprevious<CR>
+nnoremap tl :tabnext<CR>
+nnoremap td :tabclose<CR>
+nnoremap tn :tabnew<CR>
+
+" move around windows
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+" open my vimrc in a split
+nnoremap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<cr>
+nnoremap <leader>sv :source $MYVIMRC<cr>
