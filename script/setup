@@ -187,8 +187,8 @@ setup_vim() {
   if [ -d $vundle_path ]; then
       info "Updating Vundle..."
 
-  #    cd $vundle_path
-  #    git pull
+      cd $vundle_path
+      git pull
   else
     info "Installing Vundle..."
     git clone "$vundle_repo" "$vundle_path"

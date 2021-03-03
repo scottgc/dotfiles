@@ -9,15 +9,18 @@ tap "homebrew/formula-analytics"
 tap "homebrew/services"
 
 brew 'coreutils'
+brew 'composer'
 brew "git"
 brew "mas"
 brew "tmux"
+brew "php"
 brew "python"
 
 cask 'mysqlworkbench'
 cask 'dropbox'
 cask "google-chrome"
 cask 'iterm2'
+cask 'postman'
 cask "slack"
 cask 'spotify'
 cask 'vagrant'

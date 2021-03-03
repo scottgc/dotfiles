@@ -35,3 +35,30 @@
 : 1600439245:0;xcode
 : 1600439338:0;xcode-select
 : 1600446382:0;exit
+cd .dotfiles
+l
+ls -la
+git status
+git checkout zsh
+git status
+cd zsh
+ls -la
+vim ../script/setup
+cd ../
+./script/setup
+git status
+reload!
+exit
+: 1605646533:0;vim
+: 1605646563:0;vim script/setup
+: 1605646587:0;./script/setup
+: 1605646605:0;cim
+: 1605646608:0;vim
+: 1605646656:0;vim script/setup
+: 1605646704:0;./script/setup
+: 1605646730:0;vim
+: 1605646748:0;vim script/setup
+: 1605646830:0;git clone https://github.com/powerline/fonts.git --depth=1
+: 1605646851:0;cd fonts
+: 1605646856:0;./install.sh
+: 1605646862:0;exit
