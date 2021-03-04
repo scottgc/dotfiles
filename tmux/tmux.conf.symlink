@@ -32,25 +32,22 @@ set -g status-keys vi
 # Pane colours
 #-------------------------------------------------------#
 # set inactive/active window styles
-# set -g window-style 'fg=colour247,bg=colour236'
-# set -g window-active-style 'fg=colour250,bg=black'
+set -g window-style 'fg=colour247 bg=colour236'
+set -g window-active-style 'fg=colour250 bg=black'
 
 # pane border
-# set -g pane-border-bg colour235
-# set -g pane-border-fg colour238
-# set -g pane-active-border-bg colour236
-# set -g pane-active-border-fg colour51
+set -g pane-active-border 'fg=colour238 bg=colour235'
 #-------------------------------------------------------#
 
 #-------------------------------------------------------#
 # PANE NAVIGATION/MANAGEMENT
 #-------------------------------------------------------#
 # splitting panes
-bind \\ split-window -h -c '#{pane_current_path}'
-bind - split-window -v -c '#{pane_current_path}'
+bind \\ split-window -h -c "#{pane_current_path}"
+bind - split-window -v -c "#{pane_current_path}"
 
 # open new panes in current path
-bind c new-window -c '#{pane_current_path}'
+bind c new-window -c "#{pane_current_path}"
 
 # Use Alt-arrow keys WITHOUT PREFIX KEY to switch panes
 bind -n M-Left select-pane -L
