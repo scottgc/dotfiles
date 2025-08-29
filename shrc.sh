@@ -180,9 +180,11 @@ elif [[ -n "${WINDOWS}" ]]; then
   }
 fi
 
+# Set up editor
 if quiet_which code; then
   export GIT_EDITOR="${EDITOR} -w"
   export SVN_EDITOR="${GIT_EDITOR}"
+  export EDITOR="code"
 else
   export EDITOR="vim"
 fi

@@ -28,3 +28,5 @@ cask "google-chrome"
 cask "slack"
 # Streaming Music
 cask 'spotify'
+# Open-source code editor
+cask "visual-studio-code"
