@@ -15,7 +15,8 @@ brew "eza"
 brew "git"
 # Mac App Store command-line interface
 brew "mas"
-
+# Fish-like fast/unobtrusive autosuggestions for zsh
+brew "zsh-autosuggestions"
 
 # Google Chrome Browser
 cask "google-chrome"

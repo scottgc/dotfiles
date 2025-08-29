@@ -35,5 +35,9 @@ bindkey -e
 bindkey "^u" history-beginning-search-backward
 bindkey "^v" history-beginning-search-forward
 
+# enable autosuggestions
+ZSH_AUTOSUGGESTIONS="$HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+[ -f "$ZSH_AUTOSUGGESTIONS" ] && source "$ZSH_AUTOSUGGESTIONS"
+
 # to avoid non-zero exit code
 true
