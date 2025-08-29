@@ -70,6 +70,7 @@ alias rm="rm -iv"
 alias mv="mv -iv"
 alias cp="cp -irv"
 alias du="du -sh"
+alias ll="ls -la"
 alias less="less --ignore-case --raw-control-chars"
 alias rsync="rsync --partial --progress --human-readable --compress"
 alias rg="rg --colors 'match:style:nobold' --colors 'path:style:nobold'"
@@ -112,7 +113,13 @@ else
   alias ls="ls -F --color=auto"
 fi
 
-alias ll="ls -la"
+if quiet_which dust; then
+  alias du="dust"
+fi
+
+if quiet_which duf; then
+  alias df="duf"
+fi
 
 # Configure environment
 export CLICOLOR=1

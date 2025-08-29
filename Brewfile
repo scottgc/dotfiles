@@ -5,6 +5,10 @@ tap "homebrew/test-bot"
 
 # Search tool like grep, but optimized for programmers
 brew "ack"
+# Disk Usage/Free Utility - a better 'df' alternative
+brew "duf"
+# More intuitive version of du in rust
+brew "dust"
 # Modern, maintained replacement for ls
 brew "eza"
 # Distributed revision control system
