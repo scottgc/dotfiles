@@ -1,0 +1,113 @@
+#!/bin/bash
+# Install all dotfiles into the home directory
+
+set -eo pipefail
+
+echo "===START SETUP==="
+
+if [[ -L "$0" ]]; then
+  SCRIPTSETUP="$(readlink "$0")"
+else
+  SCRIPTSETUP="$0"
+fi
+
+echo ${SCRIPTSETUP}
+
+DOTFILESDIRREL=$(dirname "${SCRIPTSETUP}")
+cd "${DOTFILESDIRREL}"/.. || exit
+DOTFILESDIR=$(pwd -P)
+
+echo ${DOTFILESDIRREL}
+echo ${DOTFILESDIR}
+echo ${HOME}
+
+[[ "$(uname -s)" = "Darwin" ]] && export MACOS=1
+[[ "$(uname -s)" = "Linux" ]] && export LINUX=1
+uname -s | grep -q "_NT-" && export WINDOWS=1
+[[ -n "${LINUX}" ]] && grep -qEi "(Microsoft|WSL)" /proc/version && export WSL=1
+
+if [[ -n "${MACOS}" ]]; then
+  echo "MACOS"
+  # VSCODE="${HOME}/Library/Application Support/Code/User"
+  # CURSOR="${HOME}/Library/Application Support/Cursor/User"
+elif [[ -n "${LINUX}" ]]; then
+  echo "LINUX"
+  # VSCODE="${HOME}/.config/Code/User"
+  # CURSOR="${HOME}/.config/Cursor/User"
+elif [[ -n "${WINDOWS}" ]]; then
+  echo "WINDOWS"
+  # VSCODE="${APPDATA}/Code/User"
+  # CURSOR="${APPDATA}/Cursor/User"
+  # set -x
+fi
+
+echo "===START DOTFILE==="
+for DOTFILE in *; do
+  HOMEFILE="${HOME}/.${DOTFILE}"
+  [[ -d "${DOTFILE}" ]] && DOTFILE="${DOTFILE}/"
+  DIRFILE="${DOTFILESDIR}/${DOTFILE}"
+ 
+  # Don't mess with Codespaces' default SSH setup.
+  if [[ -n "${CODESPACES}" ]]; then
+    echo "Codespaces"
+    echo "${DOTFILE}" | grep -E -q '^ssh/' && continue
+  fi
+
+  # Don't try to install some unneeded paths
+  echo "${DOTFILE}" | grep -E -q '(^bin/$|bundle/$|script/$|\.txt$|\.md$)' && continue
+
+  # Only install gitconfig.local.macos on macOS
+  if echo "${DOTFILE}" | grep -q 'gitconfig.local.macos'; then
+    [[ -z "${MACOS}" ]] && continue
+    HOMEFILE="${HOME}/.gitconfig.local"
+  fi
+
+  # Only install gitconfig.local.macos on macOS
+  if echo "${DOTFILE}" | grep -q 'Brewfile'; then
+    HOMEFILE="${HOME}/Brewfile"
+  fi
+
+  # Remove .sh extensions
+  echo "${DOTFILE}" | grep -q '\.sh' &&
+    HOMEFILE="${HOME}/.$(echo "${DOTFILE}" | sed -e 's/\.sh//')"
+
+  if ! [[ -d "${DOTFILE}" ]]; then
+    if [[ -L "${HOMEFILE}" ]]; then
+      ln -sf "${DIRFILE}" "${HOMEFILE}"
+    else
+      ln -svf "${DIRFILE}" "${HOMEFILE}"
+    fi
+  elif [[ -L "${HOMEFILE}" ]]; then
+    rm -r "${HOMEFILE}" 2>/dev/null
+    ln -s "${DIRFILE}" "${HOMEFILE}"
+  else
+    rm -rfv "${HOMEFILE}" 2>/dev/null
+    ln -sv "${DIRFILE}" "${HOMEFILE}"
+  fi
+
+  echo ${HOMEFILE}
+  echo ${DOTFILE}
+  echo ${DIRFILE}
+
+done
+
+echo "===END DOTFILE==="
+
+HOMEDOTFILES="${HOME}/.dotfiles"
+if [[ "${DOTFILESDIR}" != "${HOMEDOTFILES}" ]]; then
+  echo "Change ${HOMEDOTFILES} link"
+  rm -f "${HOMEDOTFILES}"
+  ln -sf "${DOTFILESDIR}" "${HOMEDOTFILES}"
+fi
+
+mkdir -pv ~/projects
+
+echo "===START STRAP==="
+
+if [[ -n "${LINUX}" ]]; then
+  exec script/linux-after-setup
+elif [[ -n "${CI}" && -n "${MACOS}" ]]; then
+  exec script/strap-after-setup
+fi
+
+echo "===END STRAP==="
