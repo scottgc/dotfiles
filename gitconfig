@@ -1,0 +1,115 @@
+[credential]
+	helper = osxkeychain
+
+[user]
+	# Name used in commit messages.
+	name = Scott Gibson-Craig
+	# Email used in commit messages.
+	email = scott.gc@gmail.com
+[include]
+	path = ~/.gitconfig.local
+[github]
+	# GitHub username for command-line tools.
+	user = scottgc
+[color]
+	# Colour terminal command output when possible.
+	ui = auto
+[gist]
+	# Open GitHub Gist in browser after submission.
+	browse = true
+[push]
+	# Push to the set upstream branch being tracked by default.
+	default = simple
+	# Automatically create remotes if they don't exist.
+	autoSetupRemote = true
+[pull]
+	# Default to rebasing on pulls
+	rebase = true
+[fetch]
+	# Always prune when fetching (and pulling).
+	prune = true
+	# Always fetch all remotes.
+	all = true
+	# Write commit graph to speed up some repositories.
+	writeCommitGraph = true
+[gc]
+	# Write commit graph to speed up some repositories.
+	writeCommitGraph = true
+[rerere]
+	# Store and re-use manual conflict resolution changes.
+	enabled = true
+	# Automatically re-apply resolutions if seen again
+	autoupdate = true
+[core]
+	# Exclude everything this file. Used for general exclusions.
+	excludesfile = ~/.gitignore
+	# Set attributes on files. Used for general diff improvements.
+	attributesfile = ~/.gitattributes
+	# Don't prompt for commit messages for merge commits.
+	mergeoptions = --no-edit
+	# Speed up some repositories.
+	commitGraph = true
+	# Output unicode characters (e.g. emoji).
+	quotepath = on
+[help]
+  	# Autocorrect mistyped commands.
+	autocorrect = 1
+[alias]
+	## 'New' Commands
+[diff]
+	# Use the better histogram diff algorithm
+	algorithm = histogram
+	# Use new diff algorithm to make e.g. function diffs look better.
+	compactionheuristic = true
+	# Use a different colour for moved lines than added/modified ones
+	colorMoved = true
+	# Use more Git-internals specific prefixes for diff hunks
+	mnemonicPrefix = true
+	# Detect if a file has been renamed
+	renames = true
+[grep]
+	# Use Perl regexes for grep
+	patternType = perl
+[diff "xml"]
+	textconv = xmllint --format --recover
+[mergetool]
+	# Don't prompt before opening the merge tool.
+	prompt = false
+	# Don't keep backups of the merge tool inputs.
+	keepBackup = false
+	# Don't keep the merge tool temporary input/output files.
+	keepTemporaries = false
+[apply]
+	# Cleanup whitespace by default when apply patches.
+	whitespace = fix
+[rebase]
+	# Run `git stash` if needed before a `git rebase`
+	autoStash = true
+	# Auto-add `--autosquash` to `git rebase`
+	autoSquash = true
+[url "git@github.com:"]
+	# Use SSH for GitHub instead of https://
+	# Enable this in networks where https:// has issues.
+	# insteadOf = https://github.com/
+[commit]
+	# Show the diff as a comment in the commit message template.
+	verbose = true
+[branch]
+	# Sort branches by committer date.
+	sort = -committerdate
+[tag]
+	# Sort tags by newest first
+	sort = -version:refname
+[protocol]
+	# Use Git v2 protocol for better performance
+	version = 2
+[log]
+	# Print more readable dates in `git log`
+	date = human
+	# git-delta settings
+[checkout]
+	# If in doubt about the branch to checkout, pick origin.
+	defaultRemote = origin
+[init]
+	# Use same default branch name as GitHub.
+	defaultBranch = main
