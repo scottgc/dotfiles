@@ -1,0 +1,173 @@
+#!/bin/bash
+# shellcheck disable=SC2155
+
+# Colourful manpages
+export LESS_TERMCAP_mb=$'\E[01;31m'
+export LESS_TERMCAP_md=$'\E[01;31m'
+export LESS_TERMCAP_me=$'\E[0m'
+export LESS_TERMCAP_se=$'\E[0m'
+export LESS_TERMCAP_so=$'\E[01;44;33m'
+export LESS_TERMCAP_ue=$'\E[0m'
+export LESS_TERMCAP_us=$'\E[01;32m'
+
+# Set to avoid `env` output from changing console colour
+export LESS_TERMEND=$'\E[0m'
+
+# Print field by number
+field() {
+  ruby -ane "puts \$F[$1]"
+}
+
+# Setup PATH
+
+# Remove from anywhere in PATH
+remove_from_path() {
+  [[ -d "$1" ]] || return
+  PATHSUB=":${PATH}:"
+  PATHSUB=${PATHSUB//:$1:/:}
+  PATHSUB=${PATHSUB#:}
+  PATHSUB=${PATHSUB%:}
+  export PATH="${PATHSUB}"
+}
+
+# Add to the start of PATH if it exists
+add_to_path_start() {
+  [[ -d "$1" ]] || return
+  remove_from_path "$1"
+  export PATH="$1:${PATH}"
+}
+
+# Add to the end of PATH if it exists
+add_to_path_end() {
+  [[ -d "$1" ]] || return
+  remove_from_path "$1"
+  export PATH="${PATH}:$1"
+}
+
+# Add to PATH even if it doesn't exist
+force_add_to_path_start() {
+  remove_from_path "$1"
+  export PATH="$1:${PATH}"
+}
+
+quiet_which() {
+  command -v "$1" >/dev/null
+}
+
+if [[ -n "${MACOS}" ]]; then
+  add_to_path_start "/opt/homebrew/bin"
+elif [[ -n "${LINUX}" ]]; then
+  add_to_path_start "/home/linuxbrew/.linuxbrew/bin"
+fi
+
+add_to_path_start "/usr/local/bin"
+add_to_path_end "${HOME}/.dotfiles/bin"
+
+# Aliases
+alias mkdir="mkdir -vp"
+alias df="df -H"
+alias rm="rm -iv"
+alias mv="mv -iv"
+alias cp="cp -irv"
+alias du="du -sh"
+alias less="less --ignore-case --raw-control-chars"
+alias rsync="rsync --partial --progress --human-readable --compress"
+alias rg="rg --colors 'match:style:nobold' --colors 'path:style:nobold'"
+alias be="bundle exec"
+alias sha256="shasum -a 256"
+alias sedperl="perl -p -e"
+
+# Command-specific stuff
+if quiet_which brew; then
+  eval "$(brew shellenv)"
+
+  export HOMEBREW_DEVELOPER=1
+  export HOMEBREW_BUNDLE_INSTALL_CLEANUP=1
+  export HOMEBREW_BUNDLE_DUMP_DESCRIBE=1
+  export HOMEBREW_NO_ENV_HINTS=1
+  export HOMEBREW_CLEANUP_MAX_AGE_DAYS=30
+  export HOMEBREW_DOWNLOAD_CONCURRENCY="auto"
+
+  add_to_path_end "${HOMEBREW_PREFIX}/Library/Homebrew/shims/gems"
+
+  # Specifically want this to expand when defined, not when run.
+  # shellcheck disable=SC2139
+  alias portableruby="${HOMEBREW_PREFIX}/Library/Homebrew/vendor/portable-ruby/current/bin/ruby"
+  # shellcheck disable=SC2139
+  alias portablebundle="${HOMEBREW_PREFIX}/Library/Homebrew/vendor/portable-ruby/current/bin/bundle"
+
+  alias bbe="brew bundle exec --"
+  alias ebbe='eval "$(brew bundle env)"'
+
+  alias hbc='cd $HOMEBREW_REPOSITORY/Library/Taps/homebrew/homebrew-core'
+fi
+
+# Configure environment
+export CLICOLOR=1
+
+# OS-specific configuration
+if [[ -n "${MACOS}" ]]; then
+  export GREP_OPTIONS="--color=auto"
+
+  alias locate="mdfind -name"
+  alias finder-hide="setfile -a V"
+
+  # output what's listening on the supplied port
+  on-port() {
+    sudo lsof -nP -i4TCP:"$1"
+  }
+
+  # make no-argument find Just Work.
+  find() {
+    local arg
+    local path_arg
+    local dot_arg
+
+    for arg; do
+      [[ ${arg} =~ "^-" ]] && break
+      path_arg="${arg}"
+    done
+
+    [[ -z "${path_arg}" ]] && dot_arg="."
+
+    command find ${dot_arg} "$@"
+  }
+
+elif [[ -n "${LINUX}" ]]; then
+  quiet_which keychain && eval "$(keychain -q --eval --agents ssh id_rsa)"
+
+  # Run dircolors if it exists
+  quiet_which dircolors && eval "$(dircolors -b)"
+
+  add_to_path_end "/data/github/shell/bin"
+  add_to_path_start "/workspaces/github/bin"
+
+  alias su="/bin/su -"
+  alias open="xdg-open"
+elif [[ -n "${WINDOWS}" ]]; then
+  open() {
+    # shellcheck disable=SC2145
+    cmd /C"$@"
+  }
+fi
+
+if quiet_which code; then
+  export GIT_EDITOR="${EDITOR} -w"
+  export SVN_EDITOR="${GIT_EDITOR}"
+else
+  export EDITOR="vim"
+fi
+
+# Save directory changes
+cd() {
+  builtin cd "$@" || return
+  [[ -n "${TERMINALAPP}" ]] && command -v set_terminal_app_pwd >/dev/null &&
+    set_terminal_app_pwd
+  pwd >"${HOME}/.lastpwd"
+  ls
+}
+
+# Move files to the Trash folder
+trash() {
+  mv "$@" "${HOME}/.Trash/"
+}
