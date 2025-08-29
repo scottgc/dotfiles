@@ -13,6 +13,8 @@ brew "dust"
 brew "eza"
 # Distributed revision control system
 brew "git"
+# package manager for node
+brew "nvm"
 # Mac App Store command-line interface
 brew "mas"
 # package manager for ruby
