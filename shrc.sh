@@ -102,6 +102,18 @@ if quiet_which brew; then
   alias hbc='cd $HOMEBREW_REPOSITORY/Library/Taps/homebrew/homebrew-core'
 fi
 
+if quiet_which eza; then
+  alias ls="eza --classify --group --git"
+  alias lt="ls -T"
+  alias lr="lt -L=1"
+elif [[ -n "${MACOS}" ]]; then
+  alias ls="ls -F"
+else
+  alias ls="ls -F --color=auto"
+fi
+
+alias ll="ls -la"
+
 # Configure environment
 export CLICOLOR=1
 

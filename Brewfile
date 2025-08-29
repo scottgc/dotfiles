@@ -5,6 +5,8 @@ tap "homebrew/test-bot"
 
 # Search tool like grep, but optimized for programmers
 brew "ack"
+# Modern, maintained replacement for ls
+brew "eza"
 # Distributed revision control system
 brew "git"
 # Mac App Store command-line interface
