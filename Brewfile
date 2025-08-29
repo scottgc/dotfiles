@@ -15,6 +15,8 @@ brew "eza"
 brew "git"
 # Mac App Store command-line interface
 brew "mas"
+# package manager for ruby
+brew "rbenv"
 # Fish-like fast/unobtrusive autosuggestions for zsh
 brew "zsh-autosuggestions"
 

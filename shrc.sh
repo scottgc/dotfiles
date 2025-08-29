@@ -103,6 +103,14 @@ if quiet_which brew; then
   alias hbc='cd $HOMEBREW_REPOSITORY/Library/Taps/homebrew/homebrew-core'
 fi
 
+if quiet_which duf; then
+  alias df="duf"
+fi
+
+if quiet_which dust; then
+  alias du="dust"
+fi
+
 if quiet_which eza; then
   alias ls="eza --classify --group --git"
   alias lt="ls -T"
@@ -113,12 +121,8 @@ else
   alias ls="ls -F --color=auto"
 fi
 
-if quiet_which dust; then
-  alias du="dust"
-fi
-
-if quiet_which duf; then
-  alias df="duf"
+if quiet_which rbenv; then
+  eval "$(rbenv init -)"
 fi
 
 # Configure environment
