@@ -19,6 +19,8 @@ brew "nvm"
 brew "mas"
 # package manager for ruby
 brew "rbenv"
+# terminal panel manager
+brew "tmux"
 # Fish-like fast/unobtrusive autosuggestions for zsh
 brew "zsh-autosuggestions"
 
