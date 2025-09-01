@@ -113,8 +113,8 @@ fi
 
 if quiet_which eza; then
   alias ls="eza --classify --group --git"
-  alias lt="ls -T"
-  alias lr="lt -L=1"
+  alias lt="eza --classify --group --git -T"
+  alias lr="eza --classify --group --git -T -L=1"
 elif [[ -n "${MACOS}" ]]; then
   alias ls="ls -F"
 else
@@ -123,6 +123,11 @@ fi
 
 if quiet_which rbenv; then
   eval "$(rbenv init -)"
+fi
+
+if quiet_which nvim; then
+  alias vim="nvim"
+  alias vi="nvim"
 fi
 
 if quiet_which nvm; then

@@ -17,6 +17,8 @@ brew "git"
 brew "nvm"
 # Mac App Store command-line interface
 brew "mas"
+# terminal editor package manager
+brew "neovim"
 # package manager for ruby
 brew "rbenv"
 # terminal panel manager
