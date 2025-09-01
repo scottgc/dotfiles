@@ -24,6 +24,8 @@ brew "zsh-autosuggestions"
 
 # Google Chrome Browser
 cask "google-chrome"
+# Better terminal
+cask 'iterm2'
 # Communication Tool For Team
 cask "slack"
 # Streaming Music
